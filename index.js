@@ -6,13 +6,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const connectionString = process.env.DB_CONNECTION;
-
-if (!connectionString) {
-  throw new Error('Database connection string is not set in environment variables.');
-}
-
-const sequelize = new Sequelize(connectionString);
+const sequelize = new Sequelize({
+  database: process.env.DB_NAME,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_ENDPOINT,
+  port: process.env.DB_PORT,
+  dialect: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  },
+});
 
 const Todo = sequelize.define('Todo', {
   title: {
