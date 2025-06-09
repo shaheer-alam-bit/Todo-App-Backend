@@ -6,12 +6,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const portInt = parseInt(process.env.DB_PORT, 10);
+if (isNaN(port) || port < 0 || port > 65535) {
+  throw new Error(`Invalid DB_PORT: ${process.env.DB_PORT}`);
+}
+
 const sequelize = new Sequelize({
   database: process.env.DB_NAME,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_ENDPOINT,
-  port: process.env.DB_PORT,
+  port: portInt,
   dialect: "postgres",
   dialectOptions: {
     ssl: {
