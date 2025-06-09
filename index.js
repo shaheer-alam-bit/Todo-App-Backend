@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 const portInt = parseInt(process.env.DB_PORT, 10);
-if (isNaN(port) || port < 0 || port > 65535) {
+if (isNaN(portInt) || portInt < 0 || portInt > 65535) {
   throw new Error(`Invalid DB_PORT: ${process.env.DB_PORT}`);
 }
 
